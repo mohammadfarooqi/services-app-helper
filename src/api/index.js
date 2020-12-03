@@ -15,7 +15,8 @@ router.get('/', (req, res) => {
   });
 });
 
-router.use('/:hash', createProxyMiddleware({ 
+router.use('/:hash', createProxyMiddleware({
+  target: `${process.env.FORWARD_URL}`,
   router: async (req) => {
     const object = await utils.readFile(GIT_HASH_DATA_PATH);
 
