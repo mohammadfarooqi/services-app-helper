@@ -16,7 +16,10 @@ router.get('/:hash', async (req, res) => {
 
   const temp = object[req.params.hash];
   
-  res.json(temp);
+  res.json({
+    hash: req.params.hash,
+    ...temp,
+  });
 });
 
 

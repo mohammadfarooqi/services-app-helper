@@ -15,24 +15,25 @@ router.get('/', (req, res) => {
   });
 });
 
+router.use('/gitHash', git_hash);
+
 router.use('/:hash', createProxyMiddleware({
   target: `${process.env.FORWARD_URL}`,
+  // target: `http://localhost:3000`,
   router: async (req) => {
     const object = await utils.readFile(GIT_HASH_DATA_PATH);
 
     const temp = object[req.params.hash];
 
     return `${process.env.FORWARD_URL}:${temp.port}`;
+    // return `http://localhost:3000`;
   },
   changeOrigin: true,
   // pathRewrite: {
   //   [`^/json_placeholder`]: '',
   // },
-  pathRewrite: (path, req) => { 
-    return path.replace('/' + req.params.hash, ''); 
-  }
+  pathRewrite: (path, req) => path.replace('/api/v1/' + req.params.hash, ''),
+  logLevel: 'debug',
 }));
-
-router.use('/gitHash', git_hash);
 
 module.exports = router;
