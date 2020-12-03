@@ -7,7 +7,8 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "lint": "eslint --fix src",
-    "test": "mocha --exit"
+    "test": "mocha --exit",
+    "run:pm2": "pm2 start src/index.js --name services-app-helper --watch"
   },
   "keywords": [],
   "author": "",
